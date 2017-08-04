@@ -15,7 +15,11 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/grayscale.jpg "Grayscale"
+[image1]: ./test_images_output/solidWhiteRight_Gray.jpg "Grayscale"
+[image2]: ./test_images_output/solidWhiteRight_Canny.jpg "Canny"
+[image3]: ./test_images_output/solidWhiteRight_Masked.jpg "Masked"
+[image4]: ./test_images_output/solidWhiteRight_Hough.jpg "Hough"
+[image5]: ./test_images_output/solidWhiteRight_Final.jpg "Final"
 
 ---
 
@@ -41,7 +45,7 @@ In order to draw a single line on the left and right lanes, I modified the draw_
 
 If you'd like to include images to show how the pipeline works, here is how to include an image: 
 
-![alt text][image1]
+![alt text][image1][image2][image3][image4][image5]
 
 
 ### 2. Identify potential shortcomings with your current pipeline
