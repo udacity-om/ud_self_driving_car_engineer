@@ -51,11 +51,15 @@ Following images show the output of steps in pipeline:
 ### 2. Identify potential shortcomings with your current pipeline
 
 
-One potential shortcoming is that the lane lines may intersect during curves. Other shortcoming is that the lane lines are not identified correctly when the road is not black
+Following are the shortcomings:
+-> The lane lines may intersect during curves
+-> The lane lines are not identified correctly when the road is not black.
+-> The lane lines are shaky
 
 
 ### 3. Suggest possible improvements to your pipeline
 
-A possible improvement would be to reduce the lane lines length during curves.
-
-Another potential improvement could be to properly identify weak edges(the case where the road is not black)
+Improvements would be as follows:
+-> To reduce the lane lines length during curves
+-> To properly identify weak edges(the case where the road is not black)
+-> Further filtering of slope values and points to reduce shaking of lane lines
