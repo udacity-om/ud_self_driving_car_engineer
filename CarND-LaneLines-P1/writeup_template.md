@@ -43,9 +43,9 @@ In order to draw a single line on the left and right lanes, I modified the draw_
 -> Again using the formula, x = (y-b)/m, the x values are calculated.
 -> Using the 4 points, top and bottom points of left and right lanes, lines are created using cv2.line
 
-If you'd like to include images to show how the pipeline works, here is how to include an image: 
+Following images show the output of steps in pipeline: 
 
-![alt text][image1] ![alt text][image2] ![alt text][image3] ![alt text][image4] ![alt text][image5]
+Grayscale![alt text][image1] Canny![alt text][image2] ![alt text][image3] ![alt text][image4] ![alt text][image5]
 
 
 ### 2. Identify potential shortcomings with your current pipeline
