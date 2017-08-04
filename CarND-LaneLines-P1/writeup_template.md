@@ -45,7 +45,7 @@ In order to draw a single line on the left and right lanes, I modified the draw_
 
 Following images show the output of steps in pipeline: 
 
-Grayscale![alt text][image1] Canny![alt text][image2] ![alt text][image3] ![alt text][image4] ![alt text][image5]
+![alt text][image1] ![alt text][image2] ![alt text][image3] ![alt text][image4] ![alt text][image5]
 
 
 ### 2. Identify potential shortcomings with your current pipeline
