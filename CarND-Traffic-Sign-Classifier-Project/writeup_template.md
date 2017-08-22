@@ -21,12 +21,17 @@ The goals / steps of this project are the following:
 
 [image1]: ./examples/visualization.jpg "Visualization"
 [image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+
+[image3]: ./Loss_Plots/Loss1.jpg "Loss 1"
+[image4]: ./Loss_Plots/Loss1.jpg "Loss 2"
+[image5]: ./Loss_Plots/Loss1.jpg "Loss 3"
+[image6]: ./Loss_Plots/Loss1.jpg "Loss 4"
+[image7]: ./Loss_Plots/Loss1.jpg "Loss 5"
+[image8]: ./Loss_Plots/Loss1.jpg "Loss 6"
+[image9]: ./Loss_Plots/Loss1.jpg "Loss 7"
+[image10]: ./Loss_Plots/Loss1.jpg "Loss 8"
+[image11]: ./Loss_Plots/Loss1.jpg "Loss 9"
+[image12]: ./Loss_Plots/Loss1.jpg "Loss 10"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -77,11 +82,11 @@ My final model consisted of the following layers:
 | Layer         	       | Description	        	                         | 
 |:---------------------:|:---------------------------------------------:| 
 | Input         	       | 32x32x1 Grayscale image   		                  | 
-| Convolution 5x5     	 | 1x1 stride, same padding, outputs 28x28x6 	   |
+| Convolution 5x5     	 | 1x1 stride, valid padding, outputs 28x28x6 	   |
 | RELU			               |						                                         |
 | Max pooling	      	   | 2x2 stride,  outputs 14x14x6 			              | 
 | Dropout	      	       |                              			              | 
-| Convolution 5x5     	 | 1x1 stride, same padding, outputs 10x10x16 	  |
+| Convolution 5x5     	 | 1x1 stride, valid padding, outputs 10x10x16 	  |
 | RELU			               |						                                         |
 | Max pooling	      	   | 2x2 stride,  outputs 5x5x16 			               | 
 | Dropout	      	       |                              			              |
@@ -112,22 +117,43 @@ I opted for an iterative method:
 * I first tried with the default LeNet architecture, default hyperparameters (Mu = 0, Sigma = 0.1, Learn_Rate = 0.001, Epoch = 10) and images as it is without any pre-processing and got training/validation accuracy of 0.983/0.863
 * To increase the accuracies i first grayscaled and normalized the images and every other parameters same as before. This time got  training/validation accuracy of 0.983/0.863. Plotting the loss graph showed me that the model was overfitting
 
-![alt text][image1]
+![alt text][image3]
 
 * With my limited knowledge at this stage, to reduce overfitting, i reduced Sigma to 0.05, reduced Learn_Rate to 0.0005 and increased Epoch to 20. The accuracies decreased, training/validation accuracy of 0.975/0.859, and the model was still overfitting
 
-![alt text][image1]
+![alt text][image4]
 
-* After going through the forums, i decided to add dropouts after fully connected layer1 and fully connected layer2 with a Keep_Prob of 0.7. Other parameters same as previous. This model showed some improvement with training/validation accuracy of 0.962/0.907
+* After going through the forums regarding overfitting, i decided to add dropouts after fully connected layer1 and fully connected layer2 with a Keep_Prob of 0.7. Other parameters same as previous. This model showed some improvement with training/validation accuracy of 0.962/0.907 but validation accuracy still less than 0.93
 
-![alt text][image1]
+![alt text][image5]
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model? 
+* So decided to play with Keep_Prob = 0.8. With this model the training/validation accuracy was 0.969/0.898. So no luck here and also the model looked like overfitting.
+
+![alt text][image6]
+
+* Next thought of reducing the Keep_Prob to 0.4. With this the accuracies reduced to training/validation accuracy of 0.937/0.879.
+
+![alt text][image7]
+
+* Still playing with Keep_Prob, i increased it to 0.5 and the accuracies improved to training/validation accuracy of 0.966/0.916
+
+![alt text][image8]
+
+* Next I kept increasing Keep_Prob to 0.6 and Epoch to 30 and there was slight improvement in accuracies, training/validation accuracy of 0.983/0.916
+
+![alt text][image9]
+
+* In the next model, i started tuning Sigma to 0.1 and increased Epoch to 60. This resulted in a good boot in accuracies, training/validation accuracy of 0.999/0.95
+
+![alt text][image10]
+
+* Experimenting more to improve the model, going through forums, i decided to add dropouts after every layer. Also to provide lower level information to the fully connected layer for better classification, I provided both convolution layer outputs to first fully connected layer. Also reduced Epoch to 50. This resulted in a slight reduction in accuracy, training/validation accuracy of 0.994/0.943
+
+![alt text][image11]
+
+* So decided to go back to the previous best model(training/validation accuracy of 0.999/0.95) with dropouts added to every layer. 
+
+![alt text][image12] 
 
 ###Test a Model on New Images
 
@@ -135,7 +161,7 @@ If an iterative approach was chosen:
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
+![alt text][image13] ![alt text][image5] ![alt text][image6] 
 ![alt text][image7] ![alt text][image8]
 
 The first image might be difficult to classify because ...
@@ -174,5 +200,3 @@ For the second image ...
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 ####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
-
