@@ -45,11 +45,11 @@ You're reading it! and here is a link to my [project code](https://github.com/ud
 I used the pandas library to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The size of training set is 34799
+* The size of the validation set is 4410
+* The size of test set is 12630
+* The shape of a traffic sign image is 32x32
+* The number of unique classes/labels in the data set is 43
 
 ####2. Include an exploratory visualization of the dataset.
 
@@ -67,7 +67,7 @@ Here is an example of a traffic sign image before and after grayscaling.
 
 ![alt text][image2]
 
-As a last step, I normalized the image data because ...
+As a last step, I normalized the image data so that the training time can be reduced. Normalizing also makes all the feature values to have comparable range but in image data all the pixel values are already between 0 to 255.
 
 I decided to generate additional data because ... 
 
@@ -84,17 +84,25 @@ The difference between the original data set and the augmented data set is the f
 
 My final model consisted of the following layers:
 
-| Layer         		|     Description	        					| 
+| Layer         	| Description	        	                | 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+| Input         	| 32x32x1 Grayscale image   		        | 
+| Convolution 5x5     	| 1x1 stride, same padding, outputs 28x28x6 	|
+| RELU			|						|
+| Max pooling	      	| 2x2 stride,  outputs 14x14x6 			| 
+| Convolution 5x5     	| 1x1 stride, same padding, outputs 10x10x16 	|
+| RELU			|						|
+| Max pooling	      	| 2x2 stride,  outputs 5x5x16 			|
+| Fully connected	| input 400, output 120				|
+| RELU			|						|
+| Dropout	        | 				                |
+| Fully connected	| input 120, output 84				|
+| RELU			|						|
+| Dropout	        | 				                |
+| Fully connected	| input 84, output 43				|
+| Softmax		| etc.        					|
+|			|						|
+|			|						|
  
 
 
