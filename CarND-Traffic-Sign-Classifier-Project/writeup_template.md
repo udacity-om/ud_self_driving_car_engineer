@@ -39,6 +39,10 @@ The goals / steps of this project are the following:
 [image16]: ./web_images/Stop.jpg "Stop"
 [image17]: ./web_images/TurnRight.jpg "TurnRight"
 
+[image18]: ./Training_Data_Distribution.jpg "Training_Data_Distribution"
+[image19]: ./Validation_Data_Distribution.jpg "Validation_Data_Distribution"
+[image20]: ./Testing_Data_Distribution.jpg "Testing_Data_Distribution"
+
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
@@ -64,10 +68,11 @@ signs data set:
 
 ####2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+Here is an exploratory visualization of the data set. It is a bar chart showing how the data is distributed in training, validation and testing dataset
 
-
-
+![alt text][image18]
+![alt text][image19]
+![alt text][image20]
 
 ###Design and Test a Model Architecture
 
@@ -95,7 +100,7 @@ My final model consisted of the following layers:
 | RELU			               |						                                         |
 | Max pooling	      	   | 2x2 stride,  outputs 5x5x16 			               | 
 | Flatten	      	       | Flatten data from conv layer2     |
-| Fully connected	      | input 1576, output 120	 	                     |
+| Fully connected	      | input 400, output 120	 	                     |
 | RELU			               |						                                         |
 | Dropout	              | 				                                          |
 | Fully connected	      | input 120, output 84				                      |
