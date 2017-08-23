@@ -57,7 +57,7 @@ signs data set:
 * The size of training set is 34799
 * The size of the validation set is 4410
 * The size of test set is 12630
-* The shape of a traffic sign image is 32x32
+* The shape of a traffic sign image is 32x32x3. The third dimension represents three color channels(RGB)
 * The number of unique classes/labels in the data set is 43
 
 ####2. Include an exploratory visualization of the dataset.
@@ -70,13 +70,13 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 ###Design and Test a Model Architecture
 
-####1. As part of of preprocessing, I decided to convert the images to grayscale because having color images increases the complexity of the model as it will have to work on 3 color channels. Grayscale is combination of the three channels into single channel. 
+####1. As part of of preprocessing, I decided to convert the images to grayscale. The original images have the three color componenets. If the original image is fed to the model as it is the model will learn these three color componenets and will try to fit the model accordingly but in reality the same sign image maybe in different color. The model should only learn the shape of the signs irrespective of color. Converting to grayscale will keep the shape same and will also reduce the image size(features) from 32x32x3 to 32x32x1. This will also reduce trainign time.
 
 Here is an example of a traffic sign image before and after grayscaling.
 
 ![alt text][image2]
 
-In the second step of preprocessing, I normalized the image data so that the training time can be reduced. Other advantage of normalizing is to makes all the feature values to have comparable range but in image data all the pixel values are already between 0 to 255.
+In the second step of preprocessing, I normalized the image data so that all the pixel values of different images are in similar range. For e.g there is an image of Stop sign in training set whose pixels value range from 50 to 255. There is another image of Stop sign in testing set whose pixels value range from 0 to 150(maybe the image was taken during different lighting condition). I want my model to classify both these images as Stop sign but due to difference in illumination there are chances of the model classfying it differently. By normalizing the image all the pixels value will be in range -0.5 to 0.5(this range is as per my normalization method). This way the illumination factor is reduced.
 
 ####2. Then i moved to model designing and my final model consisted of the following layers:
 
