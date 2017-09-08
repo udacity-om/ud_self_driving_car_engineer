@@ -27,14 +27,18 @@ The goals / steps of this project are the following:
 [image12]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
 [image13]: ./examples/center_2017_09_05_08_42_50_473_Flipped.jpg "Flipped Image"
 
-[image14]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
-[image15]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
-[image16]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
-[image17]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
-[image18]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
-[image19]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
-[image20]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
-[image21]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
+[image14]: ./examples/MSE_Result1.jpg "Normal Image"
+[image15]: ./examples/MSE_Result2.jpg "Normal Image"
+[image16]: ./examples/MSE_Result3.jpg "Normal Image"
+[image17]: ./examples/MSE_Result4.jpg "Normal Image"
+[image18]: ./examples/MSE_Result5.jpg "Normal Image"
+[image19]: ./examples/MSE_Result6.jpg "Normal Image"
+[image20]: ./examples/MSE_Result7.jpg "Normal Image"
+[image21]: ./examples/MSE_Result8.jpg "Normal Image"
+
+[image22]: ./examples/left_2017_09_05_08_42_49_578.jpg "Left Image"
+[image23]: ./examples/center_2017_09_05_08_42_49_578.jpg "Center Image"
+[image24]: ./examples/right_2017_09_05_08_42_49_578.jpg "Right Image"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -93,7 +97,7 @@ The overall strategy for deriving a model architecture was to keep building upon
 
 My first step was to use a convolution neural network model similar to the LeNet. I thought this model might be appropriate because it also works on images as input. I had to make changes in the last layer as I needed only one output whereas LeNet had 10 outputs.
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. To reduce training time I cropped the image to concentrate only on the road and resized the image to (64, 64, 3). To better train my network I randomly choose images from the three cameras with corresponding adjustment to steering angle. I normalized and mean centered the images as part of preprocessing. I found that my first model(LeNet) did well with respect to keeping the vehicle on track but the mean square error plot showed that the model was overfitting at the end of 5 epochs. 
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. To better train my network i used augmentation techniques. I found that my first model(LeNet) did well with respect to keeping the vehicle on track but the mean square error plot showed that the model was overfitting at the end of 5 epochs. 
 
 ![alt text][image14]
 
@@ -107,21 +111,31 @@ Dropout with 0.4
 
 ![alt text][image16]
 
+I wanted to still improve the loss
+
 Dropout with 0.2
 
 ![alt text][image17]
+
+Seems to be overfitting.
 
 Increased the epochs to 10, keeping 0.2 dropout
 
 ![alt text][image18]
 
+Doesn't look like a good loss plot.
+
 Introduced another fully connected layer with 1000 neurons
 
 ![alt text][image19]
 
+Seems to be overfitting again.
+
 Reduced the epochs to 8
 
 ![alt text][image20]
+
+Again not a good looking loss plot.
 
 Changed the dropout to 0.3 after the fully connected layer with 1000 neurons and kept other dropouts at 0.2
 
@@ -135,17 +149,27 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 ####2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes 
+The final model architecture (model.py lines 183-195) consisted of a convolution neural network with the following layers and layer sizes 
 
 * Convolution Layer with 6 filter of size 5x5
 * ReLU activation
+* MaxPooling with Pooling window and strides of size 2x2
 * Convolution Layer with 6 filter of size 5x5
 * ReLU activation
+* MaxPooling with Pooling window and strides of size 2x2
 * Flatten the layer
+* Fully Connected layer with 1000 neurons
+* ReLU activation
+* Dropout with rate 0.3
 * Fully Connected layer with 120 neurons
+* ReLU activation
+* Dropout with rate 0.2
 * Fully Connected layer with 84 neurons
+* ReLU activation
+* Dropout with rate 0.2
 * Fully Connected layer with 10 neurons
-* Output neuron
+* ReLU activation
+* 1 Output neuron
 
 ####3. Creation of the Training Set & Training Process
 
@@ -167,14 +191,19 @@ I then recorded the vehicle recovering from the left side and right sides of the
 ![alt text][image10]
 ![alt text][image11]
 
-To augment the data sat, I also flipped images and angles to further reduce the bias towards one steering direction. For example, here is an image that has then been flipped:
+To augment the data sat, I randomly chose images from center, left and right cameras. Below is an example of image from left, center and right cameras:
+
+![alt text][image22]
+![alt text][image23]
+![alt text][image24]
+
+As part of augmentation, I flipped images and angles. This further reduce the bias towards one steering direction. For example, here is an image that has then been flipped:
 
 ![alt text][image12]
 ![alt text][image13]
 
-After the collection process, I had 18074 number of data points. I then preprocessed this data by ...
-
+After the collection process, I had 18074 number of data points. I then preprocessed this data by cropping the image to concentrate only on the road and resized the image to (64, 64, 3). Resizing to smaller size helps reduce training time. I also normalized and mean centered the images as part of preprocessing.
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 8 as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 8 as shown in the section **Solution Design Approach.** I used an adam optimizer so that manually training the learning rate wasn't necessary.
