@@ -30,7 +30,7 @@ The goals / steps of this project are the following:
 [image10]: ./examples/center_2017_09_07_09_02_14_958.jpg "Recovery Image 8"
 [image11]: ./examples/center_2017_09_07_09_02_14_958.jpg "Recovery Image 9"
 [image12]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
-[image13]: ./examples/center_2017_09_05_08_42_50_473_Flipped.png "Flipped Image"
+[image13]: ./examples/center_2017_09_05_08_42_50_473_Flipped.jpg "Flipped Image"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
