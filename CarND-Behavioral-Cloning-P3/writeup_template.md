@@ -18,17 +18,17 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/Model_Architecture.jpg "Model Visualization"
+[image1]: ./examples/Model_Architecture.JPG "Model Visualization"
 [image2]: ./examples/center_2017_09_05_08_43_37_429.jpg "Center Lane Driving"
 [image3]: ./examples/center_2017_09_07_09_02_14_821.jpg "Recovery Image 1"
 [image4]: ./examples/center_2017_09_07_09_02_14_889.jpg "Recovery Image 2"
 [image5]: ./examples/center_2017_09_07_09_02_14_958.jpg "Recovery Image 3"
-[image6]: ./examples/center_2017_09_07_09_02_14_958.jpg "Recovery Image 4"
-[image7]: ./examples/center_2017_09_07_09_02_14_958.jpg "Recovery Image 5"
-[image8]: ./examples/center_2017_09_07_09_02_14_958.jpg "Recovery Image 6"
-[image9]: ./examples/center_2017_09_07_09_02_14_958.jpg "Recovery Image 7"
-[image10]: ./examples/center_2017_09_07_09_02_14_958.jpg "Recovery Image 8"
-[image11]: ./examples/center_2017_09_07_09_02_14_958.jpg "Recovery Image 9"
+[image6]: ./examples/center_2017_09_07_09_02_15_027.jpg "Recovery Image 4"
+[image7]: ./examples/center_2017_09_07_09_02_15_098.jpg "Recovery Image 5"
+[image8]: ./examples/center_2017_09_07_09_02_15_165.jpg "Recovery Image 6"
+[image9]: ./examples/center_2017_09_07_09_02_15_232.jpg "Recovery Image 7"
+[image10]: ./examples/center_2017_09_07_09_02_15_300.jpg "Recovery Image 8"
+[image11]: ./examples/center_2017_09_07_09_02_15_368.jpg "Recovery Image 9"
 [image12]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
 [image13]: ./examples/center_2017_09_05_08_42_50_473_Flipped.jpg "Flipped Image"
 
