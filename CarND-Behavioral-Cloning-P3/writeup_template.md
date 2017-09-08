@@ -99,19 +99,15 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes 
 
-Convolution Layer with 6 filter of size 5x5
-ReLU activation
-Convolution Layer with 6 filter of size 5x5
-ReLU activation
-Flatten the layer
-Fully Connected layer with 120 neurons
-Fully Connected layer with 84 neurons
-Fully Connected layer with 10 neurons
-Output neuron
-
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
-
-![alt text][image1]
+* Convolution Layer with 6 filter of size 5x5
+* ReLU activation
+* Convolution Layer with 6 filter of size 5x5
+* ReLU activation
+* Flatten the layer
+* Fully Connected layer with 120 neurons
+* Fully Connected layer with 84 neurons
+* Fully Connected layer with 10 neurons
+* Output neuron
 
 ####3. Creation of the Training Set & Training Process
 
@@ -143,4 +139,4 @@ After the collection process, I had 18074 number of data points. I then preproce
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 4 as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 8 as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
