@@ -1,12 +1,4 @@
-#**Behavioral Cloning** 
-
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
-**Behavioral Cloning Project**
+#**Behavioral Cloning Project**
 
 The goals / steps of this project are the following:
 * Use the simulator to collect data of good driving behavior
@@ -19,7 +11,9 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./examples/Model_Architecture.JPG "Model Visualization"
+
 [image2]: ./examples/center_2017_09_05_08_43_37_429.jpg "Center Lane Driving"
+
 [image3]: ./examples/center_2017_09_07_09_02_14_821.jpg "Recovery Image 1"
 [image4]: ./examples/center_2017_09_07_09_02_14_889.jpg "Recovery Image 2"
 [image5]: ./examples/center_2017_09_07_09_02_14_958.jpg "Recovery Image 3"
@@ -29,8 +23,18 @@ The goals / steps of this project are the following:
 [image9]: ./examples/center_2017_09_07_09_02_15_232.jpg "Recovery Image 7"
 [image10]: ./examples/center_2017_09_07_09_02_15_300.jpg "Recovery Image 8"
 [image11]: ./examples/center_2017_09_07_09_02_15_368.jpg "Recovery Image 9"
+
 [image12]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
 [image13]: ./examples/center_2017_09_05_08_42_50_473_Flipped.jpg "Flipped Image"
+
+[image14]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
+[image15]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
+[image16]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
+[image17]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
+[image18]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
+[image19]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
+[image20]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
+[image21]: ./examples/center_2017_09_05_08_42_50_473.jpg "Normal Image"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -44,6 +48,7 @@ My project includes the following files:
 * model.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network 
+* video.mp4 video recording of the vehicle driving autonomously around track one
 * writeup_report.md or writeup_report.pdf summarizing the results
 
 ####2. Submission includes functional code
@@ -60,22 +65,23 @@ The model.py file contains the code for training and saving the convolution neur
 
 ####1. An appropriate model architecture has been employed
 
-My model consists of a preprocessing steps of cropping, resizing, normalizing and mean centering. (model.py line)
-This is followed by a modified LeNet architecture. (model.py lines)
+My model consists of a preprocessing steps of cropping, resizing, normalizing and mean centering. (model.py line 140-142 and line 181)
+This is followed by a modified LeNet architecture. (model.py lines 183 to 195)
 
-ReLU layers introduce nonlinearity and speeds up training. (code line 20) 
+Max Pooling is used to reduce the number of features and complexity of the model. (model.py line 184 and 186)
+ReLU layers introduce nonlinearity and speeds up training. (model.py line 188, 190, 192 and 194) 
 
 ####2. Attempts to reduce overfitting in the model
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+Dropouts were introduced to reduce overfitting. (model.py line 189, 191 and 193)
 
 ####3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 198).
 
 ####4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road. I also collected data by driving in the opposite direction. 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road. I also collected data by driving in the opposite direction.
 
 For details about how I created the training data, see the next section. 
 
@@ -89,9 +95,41 @@ My first step was to use a convolution neural network model similar to the LeNet
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. To reduce training time I cropped the image to concentrate only on the road and resized the image to (64, 64, 3). To better train my network I randomly choose images from the three cameras with corresponding adjustment to steering angle. I normalized and mean centered the images as part of preprocessing. I found that my first model(LeNet) did well with respect to keeping the vehicle on track but the mean square error plot showed that the model was overfitting at the end of 5 epochs. 
 
-To combat the overfitting, I modified the model by adding another Fully Connected layer. 
+![alt text][image14]
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle had difficulty recovering from sides. To improve the driving behavior in these cases, I modified the pre-processing section so that the training images were in RGB format. This is the same format which drive.py uses.
+To combat the overfitting, I introduced dropouts. After few experiments, I also added another fully connected layer(model.py line 188) after the last convolution layer. Below are the trail and error results:
+
+Dropout with 0.3
+
+![alt text][image15]
+
+Dropout with 0.4
+
+![alt text][image16]
+
+Dropout with 0.2
+
+![alt text][image17]
+
+Increased the epochs to 10, keeping 0.2 dropout
+
+![alt text][image18]
+
+Introduced another fully connected layer with 1000 neurons
+
+![alt text][image19]
+
+Reduced the epochs to 8
+
+![alt text][image20]
+
+Changed the dropout to 0.3 after the fully connected layer with 1000 neurons and kept other dropouts at 0.2
+
+![alt text][image21]
+
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle had difficulty recovering from sides. To improve the driving behavior in these cases, instead of training the model with only center image I randomly choose images from the three cameras with corresponding adjustment to steering angle. 
+
+I ran the simulator again and this time the car was doing good at the sides and turns but it wasnt driving smoothly. After digging into the forum discussions I got to know that the cv2.imread function that i used in model.py reads images in BGR format whereas the drive.py reads in images in RGB format. So I converted my images to RGB before training the model.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
