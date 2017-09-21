@@ -17,10 +17,11 @@ The goals / steps of this project are the following:
 [image1]: ./results/undistorted.jpg "Undistorted"
 [image2]: ./results/warped.jpg "Warped"
 [image3]: ./results/undistorted_lane_image.jpg "Undistorted Lane Image"
-[image4]: ./examples/binary_combo_example.jpg "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
+[image4]: ./results/warped_lane_image.jpg "Warped Lane Image"
+[image5]: ./examples/binary_combo_example.jpg "Binary Example"
+[image6]: ./examples/warped_straight_lines.jpg "Warp Example"
+[image7]: ./examples/color_fit_lines.jpg "Fit Visual"
+[image8]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
