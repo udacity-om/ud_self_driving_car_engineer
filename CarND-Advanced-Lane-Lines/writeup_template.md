@@ -70,7 +70,7 @@ Final source and destination points:
 
 #### 1. Example of a distortion-corrected image.
 
-The image is corrected for distortion as mentioned in  Camera Calibration section above. Helper function undistortImage() is used to undistort the image as shown below:
+The image is corrected for distortion as mentioned in  Camera Calibration section above. Helper function undistortImage() is used to undistort the image as shown below. Both images may look same but notice the difference in the hood in bottom corners:
 
 ![alt text][image3]
 
