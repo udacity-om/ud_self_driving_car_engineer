@@ -3,6 +3,7 @@
 The goals / steps of this project are the following:
 
 * Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
+* Compute the perspective tranform matrix.
 * Apply a distortion correction to raw images.
 * Use color transforms, gradients, etc., to create a thresholded binary image.
 * Apply a perspective transform to rectify binary image ("birds-eye view").
@@ -15,7 +16,8 @@ The goals / steps of this project are the following:
 
 [image1]: ./results/undistorted.jpg "Undistorted"
 [image2]: ./results/warped.jpg "Warped"
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
+[image3]: ./results/undistorted_lane_image.jpg "Undistorted Lane Image"
+[image4]: ./examples/binary_combo_example.jpg "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
