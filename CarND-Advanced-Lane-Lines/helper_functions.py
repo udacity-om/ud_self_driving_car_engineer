@@ -76,8 +76,3 @@ def combinedThreshold(image):
 def getColorFilter(image, thresh_low, thresh_high):
    filtered_image = cv2.inRange(image, thresh_low, thresh_high)
    return filtered_image
-   
-def gaussianBlur(image, kernel = 5):
-    # Function to smooth image
-    gauss_blur = cv2.GaussianBlur(image, (kernel, kernel), 0)
-    return gauss_blur
