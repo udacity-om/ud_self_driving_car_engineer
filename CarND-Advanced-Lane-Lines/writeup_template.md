@@ -18,11 +18,9 @@ The goals / steps of this project are the following:
 [image2]: ./results/warped.jpg "Warped"
 [image3]: ./results/undistorted_lane_image.jpg "Undistorted Lane Image"
 [image4]: ./results/warped_lane_image.jpg "Warped Lane Image"
-[image5]: ./examples/binary_combo_example.jpg "Binary Example"
-[image6]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image7]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image8]: ./examples/example_output.jpg "Output"
-[video1]: ./project_video.mp4 "Video"
+[image5]: ./results/lane_filter.jpg "Lane Filter"
+[image6]: ./results/final_image.jpg "Final Image"
+[video1]: ./project_video_output.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 
@@ -37,7 +35,6 @@ To help in modularizing and reducing the size of final code, I have created help
 * unwarpImage : unwrap an image given inverse transform matrix
 * absSobelThresh : apply Sobel filter in the given orientation
 * getColorFilter : apply color filter in the given range
-* gaussianBlur : apply gaussian blur to an image
 
 ### Camera Calibration
 
@@ -80,25 +77,39 @@ The image is warped as mentioned in Perspective Transform section above. Helper 
 
 ![alt text][image4]
 
-#### 3. Color Filtering to create a thresholded binary image.
+#### 3. Color Filtering and gradient filtering to create a thresholded binary image.
 
-The lane lines are in either yellow or white color. I used yellow and white color filters to generate a binary image.  Here's an example of my output for this step.
-
-![alt text][image3]
-
-#### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
-
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+The lane lines are in either yellow or white color, so I used yellow and white color filters on the RGB image to generate a binary image(line number x-x of cell x). I also applied sobel x filter to generate another binary image(line number x-x of cell x). I combined these two binary images to form the final binary image(line number x-x of cell x). Here's an example of my output for this step.
 
 ![alt text][image5]
 
-#### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+#### 4. Identifing lane-line pixels and fit their positions with a polynomial
 
-I did this in lines # through # in my code in `my_other_file.py`
+Identifying lane pixels involved the following steps:
+* Taking histogram along all the columns in the lower half of the image.
+  I added all pixels values along each column in the image. 
+* Finding x values corresponding to peaks in the histogram
+  Peaks in histogram are good indicator of lane lines. The x value corresponding to the peaks can be considered as x-position of the base of the lane lines.
+* Sliding window approach to identify lane pixels
+  The base of the lane lines can be used as good starting point to start searching for lane lines. I placed a sliding window, with fixed height and width, around the line center to find the line pixels. I then followed the line all the way up, adjusting the window center whenever required and possible, to find the entire line pixels. 
+  
+Using the lane pixels I fit a 2nd order polynomial, x = ay^2 + by + c, and the result is as shown below:
 
-#### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
+![alt text][image5]
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+#### 5. Radius of curvature of the lane and the position of the vehicle with respect to center.
+
+* The radius of curvature is given by: (1 + (x')^2)^1.5 / abs(x''). Taking the derivatives of x = ay^2 + by + c, 
+  First derivative, x' = 2ay + b
+  Second derivative, x'' = 2a
+  Substituting in the radius of curvature formula, we get (1 + (2ay + b)^2)^1.5 / abs(2a)
+  This is implemented in line x of cell x
+
+* I found the position of the veicle by taking the difference of center of image and center of lane lines. The center of the image is half of the image width(1280/2 = 640). The center of the lane lines is the average of x position of right and left lanes at the bottom of the image, i.e x vallue corresponding to y = image height(720)
+
+#### 6. Example image of the result plotted back down onto the road such that the lane area is identified clearly.
+
+The lane is drawn onto the warped image using 'cv2.fillPoly()' function and then the image is unwarped using helper function 'unwarpImage()'. This unwarped image is combined with the original image using 'cv2.addWeighted()' function to get the final image. Using 'cv2.putText()' function, the radius of curvature and position of car are displayed on the final image. I implemented these steps in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
 
 ![alt text][image6]
 
@@ -106,9 +117,7 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 ### Pipeline (video)
 
-#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
-
-Here's a [link to my video result](./project_video.mp4)
+I then tested the pipeline on a video and here's the [link to my video result](./project_video_output.mp4)
 
 ---
 
