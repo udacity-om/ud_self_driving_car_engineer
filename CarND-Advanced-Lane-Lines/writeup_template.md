@@ -18,10 +18,11 @@ The goals / steps of this project are the following:
 [image2]: ./results/warped.jpg "Warped"
 [image3]: ./results/undistorted_lane_image.jpg "Undistorted Lane Image"
 [image4]: ./results/warped_lane_image.jpg "Warped Lane Image"
-[image5]: ./results/lane_filter.jpg "Lane Filter"
-[image6]: ./results/finding_lane_pixels_1.jpg "Finding Lane Pixels 1"
-[image7]: ./results/finding_lane_pixels_2.jpg "Finding Lane Pixels 2"
-[image8]: ./results/final_image.jpg "Final Image"
+[image5]: ./results/lane_filter_1.jpg "Lane Filter 1"
+[image6]: ./results/lane_filter_2.jpg "Lane Filter 2"
+[image7]: ./results/finding_lane_pixels_1.jpg "Finding Lane Pixels 1"
+[image8]: ./results/finding_lane_pixels_2.jpg "Finding Lane Pixels 2"
+[image9]: ./results/final_image.jpg "Final Image"
 [video1]: ./project_video_output.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -52,7 +53,7 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 
 The code for this step is contained the IPython notebook located in "./perspective_transform.ipynb".
 
-First I choose four points on the source image and corresponding desired points on the destination image. The transformation matrix was found by using the 'cv2.getPerspectiveTransform()' function. I also found the inverse transformation matrix by swapping source and destination points. I saved these matrices in transform_matrix.pkl file. I then applied this trasformation to the test image using 'warpImage()' function and obtained the below result. The four red dots on the left image are source points and 4 red dots on the right image are destination points. The source points were selected such that they lie on the lane lines of the original image. the destination points were adjusted until the lanes lines appeared parallel in destination warped image. 
+First I choose four points on the source image and corresponding desired points on the destination image. The transformation matrix was found by using the `cv2.getPerspectiveTransform()` function. I also found the inverse transformation matrix by swapping source and destination points. I saved these matrices in transform_matrix.pkl file. I then applied this trasformation to the test image using `warpImage()` helper function and obtained the below result. The four red dots on the left image are source points and 4 red dots on the right image are destination points. The source points were selected such that they lie on the lane lines of the original image. the destination points were adjusted until the lanes lines appeared parallel in destination warped image. 
 
 Final source and destination points:
 
@@ -69,21 +70,25 @@ Final source and destination points:
 
 #### 1. Example of a distortion-corrected image.
 
-The image is corrected for distortion as mentioned in  Camera Calibration section above. Helper function undistortImage() is used to undistort the image as shown below. Both images may look same but notice the difference in the hood in bottom corners:
+The image is corrected for distortion(line 10, cell 11, advanced_lane_lines.ipynb) as mentioned in  Camera Calibration section above. Helper function `undistortImage()` is used to undistort the image as shown below. Both images may look same but notice the difference in the hood in the bottom corners:
 
 ![alt text][image3]
 
 #### 2. Example of the transformed image.
 
-The image is warped as mentioned in Perspective Transform section above. Helper function warpImage() is used to warp the image as shown below:
+The image is warped(line 13, cell 11, advanced_lane_lines.ipynb) as mentioned in Perspective Transform section above. Helper function `warpImage()` is used to warp the image as shown below:
 
 ![alt text][image4]
 
 #### 3. Color Filtering and gradient filtering to create a thresholded binary image.
 
-The lane lines are in either yellow or white color, so I used yellow and white color filters on the RGB image to generate a binary image(line number x-x of cell x). I also applied sobel x filter to generate another binary image(line number x-x of cell x). I combined these two binary images to form the final binary image(line number x-x of cell x). Here's an example of my output for this step.
+The lane lines are in either yellow or white color, so I used yellow and white color filters on the RGB image to generate a binary image(line 3-6, cell 5, advanced_lane_lines.ipynb). I used the website http://colorizer.org/ to help me get range for yellow and white colors(line 2-5, cell 2, advanced_lane_lines.ipynb). I also applied sobel x filter to generate another binary image(line 9-11, cell 5, advanced_lane_lines.ipynb). The threshold was decided after trail and error. The color filter and sobel filter compliment each other by detecting lane lines when the other filter cannot. I combined these two binary images to form the final binary image(line 14-15, cell 5, advanced_lane_lines.ipynb). Here's an example of my output for this step.
 
 ![alt text][image5]
+
+An example where the color and sobel filters compliment each other:
+
+![alt text][image6]
 
 #### 4. Identifing lane-line pixels and fit their positions with a polynomial
 
@@ -97,11 +102,11 @@ Identifying lane pixels involved the following steps:
   
 Using the lane pixels I fit a 2nd order polynomial, x = ay^2 + by + c, and the result is as shown below:
 
-![alt text][image6]
+![alt text][image7]
 
 Another image showing how the window re-centers for curved lanes
 
-![alt text][image7]
+![alt text][image8]
 
 #### 5. Radius of curvature of the lane and the position of the vehicle with respect to center.
 
@@ -117,7 +122,7 @@ Another image showing how the window re-centers for curved lanes
 
 The lane is drawn onto the warped image using 'cv2.fillPoly()' function and then the image is unwarped using helper function 'unwarpImage()'. This unwarped image is combined with the original image using 'cv2.addWeighted()' function to get the final image. Using 'cv2.putText()' function, the radius of curvature and position of car are displayed on the final image. I implemented these steps in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
 
-![alt text][image8]
+![alt text][image9]
 
 ---
 
