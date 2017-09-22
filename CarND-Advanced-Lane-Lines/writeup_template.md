@@ -19,7 +19,9 @@ The goals / steps of this project are the following:
 [image3]: ./results/undistorted_lane_image.jpg "Undistorted Lane Image"
 [image4]: ./results/warped_lane_image.jpg "Warped Lane Image"
 [image5]: ./results/lane_filter.jpg "Lane Filter"
-[image6]: ./results/final_image.jpg "Final Image"
+[image6]: ./results/finding_lane_pixels_1.jpg "Finding Lane Pixels 1"
+[image7]: ./results/finding_lane_pixels_2.jpg "Finding Lane Pixels 2"
+[image8]: ./results/final_image.jpg "Final Image"
 [video1]: ./project_video_output.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -91,11 +93,15 @@ Identifying lane pixels involved the following steps:
 * Finding x values corresponding to peaks in the histogram
   Peaks in histogram are good indicator of lane lines. The x value corresponding to the peaks can be considered as x-position of the base of the lane lines.
 * Sliding window approach to identify lane pixels
-  The base of the lane lines can be used as good starting point to start searching for lane lines. I placed a sliding window, with fixed height and width, around the line center to find the line pixels. I then followed the line all the way up, adjusting the window center whenever required and possible, to find the entire line pixels. 
+  The base of the lane lines can be used as good starting point to start searching for lane lines. I placed a sliding window, with fixed height and width, around the line center to find the line pixels. I then followed the line all the way up, re-centering the window whenever required and possible, to find the entire line pixels. 
   
 Using the lane pixels I fit a 2nd order polynomial, x = ay^2 + by + c, and the result is as shown below:
 
-![alt text][image5]
+![alt text][image6]
+
+Another image showing how the window re-centers for curved lanes
+
+![alt text][image7]
 
 #### 5. Radius of curvature of the lane and the position of the vehicle with respect to center.
 
@@ -111,7 +117,7 @@ Using the lane pixels I fit a 2nd order polynomial, x = ay^2 + by + c, and the r
 
 The lane is drawn onto the warped image using 'cv2.fillPoly()' function and then the image is unwarped using helper function 'unwarpImage()'. This unwarped image is combined with the original image using 'cv2.addWeighted()' function to get the final image. Using 'cv2.putText()' function, the radius of curvature and position of car are displayed on the final image. I implemented these steps in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
 
-![alt text][image6]
+![alt text][image8]
 
 ---
 
