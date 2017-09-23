@@ -82,25 +82,27 @@ The image is warped(line 13, cell 11, advanced_lane_lines.ipynb) as mentioned in
 
 #### 3. Color Filtering and gradient filtering to create a thresholded binary image.
 
-The lane lines are in either yellow or white color, so I used yellow and white color filters on the RGB image to generate a binary image(line 3-6, cell 5, advanced_lane_lines.ipynb). I used the website http://colorizer.org/ to help me get range for yellow and white colors(line 2-5, cell 2, advanced_lane_lines.ipynb). I also applied sobel x filter to generate another binary image(line 9-11, cell 5, advanced_lane_lines.ipynb). The threshold was decided after trail and error. The color filter and sobel filter compliment each other by detecting lane lines when the other filter cannot. I combined these two binary images to form the final binary image(line 14-15, cell 5, advanced_lane_lines.ipynb). Here's an example of my output for this step.
+The lane lines are in either yellow or white color, so I used yellow and white color filters on the RGB image to generate a binary image(line 3-6, cell 5, advanced_lane_lines.ipynb). I used the website http://colorizer.org/ to help me get range for yellow and white colors(line 2-5, cell 2, advanced_lane_lines.ipynb). I also applied sobel x filter to generate another binary image(line 9-11, cell 5, advanced_lane_lines.ipynb). The threshold was decided after several trail and error. The color filter and sobel filter compliment each other by detecting parts of lane lines which the other filter cannot. I combined these two binary images to form the final binary image(line 14-15, cell 5, advanced_lane_lines.ipynb). Here's an example of my output for this step.
 
 ![alt text][image5]
 
-An example where the color and sobel filters compliment each other:
+An example where the color and sobel filters compliment each other. The Yellow-White color filter is able to extract the bottom part of the lane lines and the Sobel X filter is able to extract the top part of the lane lines  :
 
 ![alt text][image6]
 
 #### 4. Identifing lane-line pixels and fit their positions with a polynomial
 
+Identification of lane pixels is done by the function `findLanePixels()` (line 27-28, cell 11, advanced_lane_lines.ipynb))
+
 Identifying lane pixels involved the following steps:
-* Taking histogram along all the columns in the lower half of the image.
-  I added all pixels values along each column in the image. 
+* Taking histogram along all the columns in the lower half of the image
+    * I added all pixels values along each column in the image(line 50, cell 12, advanced_lane_lines.ipynb)
 * Finding x values corresponding to peaks in the histogram
-  Peaks in histogram are good indicator of lane lines. The x value corresponding to the peaks can be considered as x-position of the base of the lane lines.
+    * Peaks in histogram are good indicator of lane lines. The x value corresponding to the peaks can be considered as x-position of the base of the lane lines(line 56-61, cell 12, advanced_lane_lines.ipynb)
 * Sliding window approach to identify lane pixels
-  The base of the lane lines can be used as good starting point to start searching for lane lines. I placed a sliding window, with fixed height and width, around the line center to find the line pixels. I then followed the line all the way up, re-centering the window whenever required and possible, to find the entire line pixels. 
+    * The base of the lane lines can be used as good starting point to start searching for lane lines. I placed a sliding window, with fixed height and width, around the line center to find the line pixels. I then followed the line all the way up, re-centering the window whenever required and possible, to find the entire line pixels(line 64-102, cell 12, advanced_lane_lines.ipynb)
   
-Using the lane pixels I fit a 2nd order polynomial, x = ay^2 + by + c, and the result is as shown below:
+Using the lane pixels I fit a 2nd order polynomial, x = ay^2 + by + c (line 31-32, cell 11, advanced_lane_lines.ipynb), and the result is as shown below:
 
 ![alt text][image7]
 
@@ -110,17 +112,18 @@ Another image showing how the window re-centers for curved lanes
 
 #### 5. Radius of curvature of the lane and the position of the vehicle with respect to center.
 
-* The radius of curvature is given by: (1 + (x')^2)^1.5 / abs(x''). Taking the derivatives of x = ay^2 + by + c, 
-  First derivative, x' = 2ay + b
-  Second derivative, x'' = 2a
-  Substituting in the radius of curvature formula, we get (1 + (2ay + b)^2)^1.5 / abs(2a)
-  This is implemented in line x of cell x
+* The radius of curvature is calculated using the function `findRadiusOfCurvature()` (line 52-53, cell 11, advanced_lane_lines.ipynb)
+   * The radius of curvature is given by: (1 + (x')^2)^1.5 / abs(x''). Taking the derivatives of x = ay^2 + by + c,
+   * First derivative: x' = 2ay + b
+   * Second derivative: x'' = 2a
+   * Substituting in the radius of curvature formula, we get (1 + (2ay + b)^2)^1.5 / abs(2a). This is implemented in line 4-12, cell 6, advanced_lane_lines.ipynb
 
-* I found the position of the veicle by taking the difference of center of image and center of lane lines. The center of the image is half of the image width(1280/2 = 640). The center of the lane lines is the average of x position of right and left lanes at the bottom of the image, i.e x vallue corresponding to y = image height(720)
+* The position of the vehicle is calculated using the function `findCarPosition()` (line 75, cell 11, advanced_lane_lines.ipynb)
+  * I found the position of the veicle by taking the difference of center of image and center of lane lines. The center of the image is half of the image width(1280/2 = 640). The center of the lane lines is the average of x position of right and left lanes at the bottom of the image, i.e x value corresponding to y = image height(720). This is implemented in line 3-10, cell 7, advanced_lane_lines.ipynb
 
 #### 6. Example image of the result plotted back down onto the road such that the lane area is identified clearly.
 
-The lane is drawn onto the warped image using 'cv2.fillPoly()' function and then the image is unwarped using helper function 'unwarpImage()'. This unwarped image is combined with the original image using 'cv2.addWeighted()' function to get the final image. Using 'cv2.putText()' function, the radius of curvature and position of car are displayed on the final image. I implemented these steps in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+The lane is drawn onto the warped image using 'cv2.fillPoly()' function and then the image is unwarped using helper function 'unwarpImage()'. This unwarped image is combined with the original image using 'cv2.addWeighted()' function to get the final image. Using 'cv2.putText()' function, the radius of curvature and position of car are displayed on the final image. I implemented these steps in lines 78-100, cell 11, advanced_lane_lines.ipynb.  Here is an example of my result on a test image:
 
 ![alt text][image9]
 
