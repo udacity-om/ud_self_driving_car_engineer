@@ -103,9 +103,9 @@ Identifying lane pixels involved the following steps:
 ![alt text][image7]
 
 * Finding x values corresponding to peaks in the histogram
-    * Peaks in histogram are good indicator of lane lines. The x value corresponding to the peaks can be considered as x-position of the base of the lane lines(line 56-61, cell 12, advanced_lane_lines.ipynb)
+    * Peaks in histogram are good indicator of lane lines. The x value corresponding to the peaks can be considered as x-position of the base of the lane lines(line 61-66, cell 12, advanced_lane_lines.ipynb)
 * Sliding window approach to identify lane pixels
-    * The base of the lane lines can be used as good starting point to start searching for lane lines. I placed a sliding window, with fixed height and width, around the line center to find the line pixels. I then followed the line all the way up, re-centering the window whenever required and possible, to find the entire line pixels(line 64-102, cell 12, advanced_lane_lines.ipynb)
+    * The base of the lane lines can be used as good starting point to start searching for lane lines. I placed a sliding window, with fixed height and width, around the line center to find the line pixels. I then followed the line all the way up, re-centering the window whenever required and possible, to find the entire line pixels(line 69-107, cell 12, advanced_lane_lines.ipynb)
   
 Using the lane pixels I fit a 2nd order polynomial, x = ay^2 + by + c (line 31-32, cell 11, advanced_lane_lines.ipynb), and the result is as shown below:
 
@@ -146,7 +146,7 @@ As explained in the image pipeline section above, the lane lines in an image are
 
 ![alt text][image11]
 
-Even though the lane pixels are found, due to the coloring/gradient filter limitations under different lighting conditions of the road, the found pixels might differ from the previous image considerably and this may lead to glitchy lane finding and glitchy radius of curvature and car position. To smoothen these changes, the polynomials of the last 10 images are stored in class variable `good_fit()`  and their average is stored in class variable `best_fit()` (lines 137-138, cell 12, advanced_lane_lines.ipynb). This best polynomial is used for the rest of the calculations. 
+Even though the lane pixels are found, due to the coloring/gradient filter limitations under different lighting conditions of the road, the found pixels might differ from the previous image considerably and this may lead to glitchy lane finding and glitchy radius of curvature and car position. To smoothen these changes, the polynomials of the last 10 images are stored in class variable `good_fit()`  and their average is stored in class variable `best_fit()` (lines 142-143, cell 12, advanced_lane_lines.ipynb). This best polynomial is used for the rest of the calculations. 
 
 There could be scenarios were the images are so bad that the found pixles vary drastically from the previous images. In these cases the current image is completely discared and previous best polynomial is used. The check for very bad pixels is done by the function `sanityCheck()` (line 87-88, cell 11, advanced_lane_lines.ipynb). This function checks for the lane width and the consistency of left and right radius of curavture. If the lane width is not within +/-0.5 m of the known lane width(this number was finalized to 3m after running through the project video) or if the left and right curavtures dont agree with each other within an experimentally calculated threshold, then the current frame doesnt pass the sanity check and is dicarded. These checks are implemented in lines 8-21, cell 8, advanced_lane_lines.ipynb.
 
