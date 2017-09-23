@@ -123,7 +123,7 @@ Another image showing how the window re-centers for curved lanes
 
 #### 6. Example image of the result plotted back down onto the road such that the lane area is identified clearly.
 
-The lane is drawn onto the warped image using `cv2.fillPoly()` function and then the image is unwarped using helper function `unwarpImage()`. This unwarped image is combined with the original image using `cv2.addWeighted()` function to get the final image. Using `cv2.putText()` function, the radius of curvature and position of car are displayed on the final image. I implemented these steps in lines 78-100, cell 11, advanced_lane_lines.ipynb.  Here is an example of my result on a test image:
+The lane is drawn onto the warped image using `cv2.fillPoly()` function and then the image is unwarped using helper function `unwarpImage()`. This unwarped image is combined with the original image using `cv2.addWeighted()` function to get the final image. Using `cv2.putText()` function, the radius of curvature and position of car are displayed on the final image. I implemented these steps in lines 78-104, cell 11, advanced_lane_lines.ipynb.  Here is an example of my result on a test image:
 
 ![alt text][image9]
 
