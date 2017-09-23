@@ -144,6 +144,7 @@ Even though the lane pixels are found, due to the coloring/gradient filter limit
 There could be scenarios were the images are so bad that the found pixles vary drastically from the previous images. In these cases the current image is completely discared and previous best polynomial is used. The check for very bad pixels is done by the function `sanityCheck()` (line 56-57, cell 11, advanced_lane_lines.ipynb). This function checks for the lane width and the consistency of left and right radius of curavture. If the lane width is not within +/-0.5 m of the known lane width(this number was finalized to 3m after running through the project video) or if the left and right curavtures dont agree with each other within an experimentally calculated threshold, then the current frame doesnt pass the sanity check and is dicarded. These checks are implemented in lines 8-21, cell 8, advanced_lane_lines.ipynb.
 
 If I get 10 consecutive bad images, then the lane lines of the next frame is calculated from scratch. This is implemented in lines 59-72, cell 11, advanced_lane_lines.ipynb.
+
 ---
 
 ### Discussion
