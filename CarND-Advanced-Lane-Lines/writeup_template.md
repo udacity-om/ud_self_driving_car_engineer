@@ -123,7 +123,7 @@ Another image showing how the window re-centers for curved lanes
 
 #### 6. Example image of the result plotted back down onto the road such that the lane area is identified clearly.
 
-The lane is drawn onto the warped image using 'cv2.fillPoly()' function and then the image is unwarped using helper function 'unwarpImage()'. This unwarped image is combined with the original image using 'cv2.addWeighted()' function to get the final image. Using 'cv2.putText()' function, the radius of curvature and position of car are displayed on the final image. I implemented these steps in lines 78-100, cell 11, advanced_lane_lines.ipynb.  Here is an example of my result on a test image:
+The lane is drawn onto the warped image using `cv2.fillPoly()` function and then the image is unwarped using helper function `unwarpImage()`. This unwarped image is combined with the original image using `cv2.addWeighted()` function to get the final image. Using `cv2.putText()` function, the radius of curvature and position of car are displayed on the final image. I implemented these steps in lines 78-100, cell 11, advanced_lane_lines.ipynb.  Here is an example of my result on a test image:
 
 ![alt text][image9]
 
@@ -133,6 +133,15 @@ The lane is drawn onto the warped image using 'cv2.fillPoly()' function and then
 
 I then tested the pipeline on a video and here's the [link to my video result](./project_video_output.mp4)
 
+The pipleline used for the image and video is the same. Here i will explain about the exta code that was required to handle video(back to back images). 
+
+To handle both images and video, I defined a class called `Line()`(cell 12, advanced_lane_lines.ipynb). The lane lines are instances of this class. This helps in easier handling of variables from image to image. 
+
+As explained in the image pipeline section above, the lane lines in an image are calculated using the histogram and sliding window method. We dont have to do this for every image of the video as changes between two consecutive images are very less. Taking this as an advantage and also to reduce execution time, the lane pixels in the next image are found by doing a local search around the previously fit polynomial. The switching between the functions `findLane()` (which finds the lane pixels from scratch) and `estimateLane()` (which estimates the lane pixels using previously fit polynomial) is done by the function `findLanePixels()` (lines 4-7, cell 9, advanced_lane_lines.ipynb). If the lane pixels are not at all found, either by `findLane()` or `estimateLane()`, then the previously found pixels are used which were stored in the class variable `prev_allx` (lines 11-18, cell 9, advanced_lane_lines.ipynb). This takes care of bad frames.
+
+Even though the lane pixels are found, due to the coloring/gradient filter limitations under different lighting conditions of the road, the found pixels might differ from the previous image considerably and this may lead to glitchy lane finding and glitchy radius of curvature and car position. To smoothen these changes, the polynomials of the last n images are stored in class variable `good_fit()`  and averaged which is stored in class variable `best_fit()` (lines 137-138, cell 12, advanced_lane_lines.ipynb). This best polynomial is used for the rest of the calculations. 
+
+There could be scenarios were the images are so bad that the found pixles vary drastically from the previous images. In these cases the current image is completely discared and previous best polynomial is used. The check for very bad pixels is done by the function `sanityCheck()` (line 56-57, cell 11, advanced_lane_lines.ipynb). This function checks for the lane width and the consistency of left and right radius of curavture. If the lane width is not within +/-0.5 m of the known lane width(this number was finalized to 3m after running through the project video) or if the left and right curavtures dont agree with each other within a experimentally calculated threshold, then the current frame doesnt pass the sanity check and is dicarded. these checks are implemented in lines 8-21, cell 8, advanced_lane_lines.ipynb.
 ---
 
 ### Discussion
