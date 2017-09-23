@@ -33,27 +33,27 @@ The goals / steps of this project are the following:
 ### Helper Functions
 
 To help modularize and reduce the size of final code, I have created helper_functions.py which holds small functions as below:
-* undistortImage : undistort an image given camera matrix and distortion coefficients
-* warpImage : warp an image given the transform matrix
-* unwarpImage : unwrap an image given inverse transform matrix
-* absSobelThresh : apply Sobel filter in the given orientation
-* getColorFilter : apply color filter in the given range
+* undistortImage : undistort, using `cv2.undistort()`, an image given camera matrix and distortion coefficients. 
+* warpImage : warp, using `cv2.warpPerspective()`, an image given the transform matrix
+* unwarpImage : unwrap, using `cv2.warpPerspective()`, an image given inverse transform matrix
+* absSobelThresh : apply Sobel filter, using `cv2.Sobel()`, in the given orientation
+* getColorFilter : apply color filter, using `cv2.inRange()`, in the given range
 
 ### Camera Calibration
 
-The code for this step is contained the IPython notebook located in "./camera_calibration.ipynb".
+The code for this step is contained in the IPython notebook located in "./camera_calibration.ipynb".
 
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
-I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I then save the camera calibration maatrix and distortion coefficients in camera_params.pkl file. I applied this distortion correction to the test image using the `undistortImage()` function and obtained this result: 
+I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I then save the camera calibration maatrix and distortion coefficients in camera_params.pkl file. I applied this distortion correction to the test image using the helper function `undistortImage()` and obtained this result: 
 
 ![alt text][image1]
 
 ### Perspective Transform
 
-The code for this step is contained the IPython notebook located in "./perspective_transform.ipynb".
+The code for this step is contained in the IPython notebook located in "./perspective_transform.ipynb".
 
-First I choose four points on the source image and corresponding desired points on the destination image. The transformation matrix was found by using the `cv2.getPerspectiveTransform()` function. I also found the inverse transformation matrix by swapping source and destination points. I saved these matrices in transform_matrix.pkl file. I then applied this trasformation to the test image using `warpImage()` helper function and obtained the below result. The four red dots on the left image are source points and 4 red dots on the right image are destination points. The source points were selected such that they lie on the lane lines of the original image. the destination points were adjusted until the lanes lines appeared parallel in destination warped image. 
+First I choose four points on the source image and corresponding desired points on the destination image. The transformation matrix was found by using the `cv2.getPerspectiveTransform()` function. I also found the inverse transformation matrix by swapping source and destination points. I saved these matrices in transform_matrix.pkl file. I then applied this trasformation to the test image using `warpImage()` helper function and obtained the below result. The four red dots on the left image are source points and 4 red dots on the right image are destination points. The source points were selected such that they lie on the lane lines of the original image. The destination points were adjusted until the lanes lines appeared parallel in the warped image. 
 
 Final source and destination points:
 
