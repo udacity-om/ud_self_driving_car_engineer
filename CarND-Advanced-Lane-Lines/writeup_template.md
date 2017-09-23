@@ -32,7 +32,7 @@ The goals / steps of this project are the following:
 ---
 ### Helper Functions
 
-To help in modularizing and reducing the size of final code, I have created helper_functions.py which holds small functions as below:
+To help modularize and reduce the size of final code, I have created helper_functions.py which holds small functions as below:
 * undistortImage : undistort an image given camera matrix and distortion coefficients
 * warpImage : warp an image given the transform matrix
 * unwarpImage : unwrap an image given inverse transform matrix
