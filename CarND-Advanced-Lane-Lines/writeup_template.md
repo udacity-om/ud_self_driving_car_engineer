@@ -98,7 +98,7 @@ Identification of lane pixels is done by the function `findLanePixels()` (line 2
 
 Identifying lane pixels involved the following steps:
 * Taking histogram along all the columns in the lower half of the image
-    * I added all pixels values along each column in the image(line 50, cell 12, advanced_lane_lines.ipynb)    
+    * I added all pixels values along each column in the image(line 50, cell 12, advanced_lane_lines.ipynb). The histogram is shown below in red:    
     
 ![alt text][image7]
 
