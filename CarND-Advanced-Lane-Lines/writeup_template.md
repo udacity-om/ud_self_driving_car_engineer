@@ -20,9 +20,11 @@ The goals / steps of this project are the following:
 [image4]: ./results/warped_lane_image.jpg "Warped Lane Image"
 [image5]: ./results/lane_filter_1.jpg "Lane Filter 1"
 [image6]: ./results/lane_filter_2.jpg "Lane Filter 2"
-[image7]: ./results/finding_lane_pixels_1.jpg "Finding Lane Pixels 1"
-[image8]: ./results/finding_lane_pixels_2.jpg "Finding Lane Pixels 2"
-[image9]: ./results/final_image.jpg "Final Image"
+[image7]: ./results/histogram_lane_image.jpg "Histogram Lane Image"
+[image8]: ./results/finding_lane_pixels_1.jpg "Finding Lane Pixels 1"
+[image9]: ./results/finding_lane_pixels_2.jpg "Finding Lane Pixels 2"
+[image10]: ./results/final_image.jpg "Final Image"
+[image11]: ./results/estimating_lane_pixels.jpg "Final Image"
 [video1]: ./project_video_output.mp4 "Video"
 
 ## [Rubric Points](https://review.udacity.com/#!/rubrics/571/view)
@@ -96,7 +98,10 @@ Identification of lane pixels is done by the function `findLanePixels()` (line 2
 
 Identifying lane pixels involved the following steps:
 * Taking histogram along all the columns in the lower half of the image
-    * I added all pixels values along each column in the image(line 50, cell 12, advanced_lane_lines.ipynb)
+    * I added all pixels values along each column in the image(line 50, cell 12, advanced_lane_lines.ipynb)    
+    
+![alt text][image7]
+
 * Finding x values corresponding to peaks in the histogram
     * Peaks in histogram are good indicator of lane lines. The x value corresponding to the peaks can be considered as x-position of the base of the lane lines(line 56-61, cell 12, advanced_lane_lines.ipynb)
 * Sliding window approach to identify lane pixels
@@ -104,28 +109,28 @@ Identifying lane pixels involved the following steps:
   
 Using the lane pixels I fit a 2nd order polynomial, x = ay^2 + by + c (line 31-32, cell 11, advanced_lane_lines.ipynb), and the result is as shown below:
 
-![alt text][image7]
+![alt text][image8]
 
 Another image showing how the window re-centers for curved lanes
 
-![alt text][image8]
+![alt text][image9]
 
 #### 5. Radius of curvature of the lane and the position of the vehicle with respect to center.
 
-* The radius of curvature is calculated using the function `findRadiusOfCurvature()` (line 52-53, cell 11, advanced_lane_lines.ipynb)
+* The radius of curvature is calculated using the function `findRadiusOfCurvature()` (line 83-84, cell 11, advanced_lane_lines.ipynb)
    * The radius of curvature is given by: (1 + (x')^2)^1.5 / abs(x''). Taking the derivatives of x = ay^2 + by + c,
    * First derivative: x' = 2ay + b
    * Second derivative: x'' = 2a
    * Substituting in the radius of curvature formula, we get (1 + (2ay + b)^2)^1.5 / abs(2a). This is implemented in line 4-12, cell 6, advanced_lane_lines.ipynb
 
-* The position of the vehicle is calculated using the function `findCarPosition()` (line 75, cell 11, advanced_lane_lines.ipynb)
+* The position of the vehicle is calculated using the function `findCarPosition()` (line 106, cell 11, advanced_lane_lines.ipynb)
   * I found the position of the veicle by taking the difference of center of image and center of lane lines. The center of the image is half of the image width(1280/2 = 640). The center of the lane lines is the average of x position of right and left lanes at the bottom of the image, i.e x value corresponding to y = image height(720). This is implemented in line 3-10, cell 7, advanced_lane_lines.ipynb
 
 #### 6. Example image of the result plotted back down onto the road such that the lane area is identified clearly.
 
-The lane is drawn onto the warped image using `cv2.fillPoly()` function and then the image is unwarped using helper function `unwarpImage()`. This unwarped image is combined with the original image using `cv2.addWeighted()` function to get the final image. Using `cv2.putText()` function, the radius of curvature and position of car are displayed on the final image. I implemented these steps in lines 78-104, cell 11, advanced_lane_lines.ipynb.  Here is an example of my result on a test image:
+The lane is drawn onto the warped image using `cv2.fillPoly()` function and then the image is unwarped using helper function `unwarpImage()`. This unwarped image is combined with the original image using `cv2.addWeighted()` function to get the final image. Using `cv2.putText()` function, the radius of curvature and position of car are displayed on the final image. I implemented these steps in lines 109-135, cell 11, advanced_lane_lines.ipynb.  Here is an example of my result on a test image:
 
-![alt text][image9]
+![alt text][image10]
 
 ---
 
@@ -137,13 +142,15 @@ The pipleline used for the image and video is the same. Here i will explain abou
 
 To handle both images and video, I defined a class called `Line()`(cell 12, advanced_lane_lines.ipynb). The lane lines are instances of this class. This helps in easier handling of variables from image to image. 
 
-As explained in the image pipeline section above, the lane lines in an image are calculated using the histogram and sliding window method. We dont have to do this for every image of the video as changes between two consecutive images are very less. Taking this as an advantage and also to reduce execution time, the lane pixels in the next image are found by doing a local search around the previously fit polynomial. The switching between the functions `findLane()` (which finds the lane pixels from scratch) and `estimateLane()` (which estimates the lane pixels using previously fit polynomial) is done by the function `findLanePixels()` (lines 4-7, cell 9, advanced_lane_lines.ipynb). If the lane pixels are not at all found, either by `findLane()` or `estimateLane()`, then the previously found pixels are used which were stored in the class variable `prev_allx` (lines 11-18, cell 9, advanced_lane_lines.ipynb). This takes care of bad frames.
+As explained in the image pipeline section above, the lane lines in an image are calculated using the histogram and sliding window method. We dont have to do this for every image of the video as changes between two consecutive images are very less. Taking this as an advantage and also to reduce execution time, the lane pixels in the next image are found by doing a local search around the previously fit polynomial. The switching between the functions `findLane()` (which finds the lane pixels from scratch) and `estimateLane()` (which estimates the lane pixels using previously fit polynomial) is done by the function `findLanePixels()` (lines 4-7, cell 9, advanced_lane_lines.ipynb). If the lane pixels are not at all found, either by `findLane()` or `estimateLane()`, then the previously found pixels are used which were stored in the class variable `prev_allx` (lines 11-18, cell 9, advanced_lane_lines.ipynb). This takes care of bad frames. The green shaded area below shows where I searched for the lines:
+
+![alt text][image11]
 
 Even though the lane pixels are found, due to the coloring/gradient filter limitations under different lighting conditions of the road, the found pixels might differ from the previous image considerably and this may lead to glitchy lane finding and glitchy radius of curvature and car position. To smoothen these changes, the polynomials of the last 10 images are stored in class variable `good_fit()`  and their average is stored in class variable `best_fit()` (lines 137-138, cell 12, advanced_lane_lines.ipynb). This best polynomial is used for the rest of the calculations. 
 
-There could be scenarios were the images are so bad that the found pixles vary drastically from the previous images. In these cases the current image is completely discared and previous best polynomial is used. The check for very bad pixels is done by the function `sanityCheck()` (line 56-57, cell 11, advanced_lane_lines.ipynb). This function checks for the lane width and the consistency of left and right radius of curavture. If the lane width is not within +/-0.5 m of the known lane width(this number was finalized to 3m after running through the project video) or if the left and right curavtures dont agree with each other within an experimentally calculated threshold, then the current frame doesnt pass the sanity check and is dicarded. These checks are implemented in lines 8-21, cell 8, advanced_lane_lines.ipynb.
+There could be scenarios were the images are so bad that the found pixles vary drastically from the previous images. In these cases the current image is completely discared and previous best polynomial is used. The check for very bad pixels is done by the function `sanityCheck()` (line 87-88, cell 11, advanced_lane_lines.ipynb). This function checks for the lane width and the consistency of left and right radius of curavture. If the lane width is not within +/-0.5 m of the known lane width(this number was finalized to 3m after running through the project video) or if the left and right curavtures dont agree with each other within an experimentally calculated threshold, then the current frame doesnt pass the sanity check and is dicarded. These checks are implemented in lines 8-21, cell 8, advanced_lane_lines.ipynb.
 
-If I get 10 consecutive bad images, then the lane lines of the next frame is calculated from scratch. This is implemented in lines 59-72, cell 11, advanced_lane_lines.ipynb.
+If I get 10 consecutive bad images, then the lane lines of the next frame is calculated from scratch. This is implemented in lines 90-103, cell 11, advanced_lane_lines.ipynb.
 
 ---
 
