@@ -25,7 +25,7 @@ The goals / steps of this project are the following:
 [image9]: ./results/final_image.jpg "Final Image"
 [video1]: ./project_video_output.mp4 "Video"
 
-## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
+## [Rubric Points](https://review.udacity.com/#!/rubrics/571/view)
 
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
