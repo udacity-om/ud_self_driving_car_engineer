@@ -13,8 +13,8 @@ The goals / steps of this project are the following:
 [image2]: ./result/visualize_color_space.jpg
 [image3]: ./result/car_non_car_ycrcb.jpg
 [image4]: ./result/visualize_hog_on_diff_color_spaces.jpg
-[image5]: ./result/visualize_hog_on_ycrcb_diff_orient.png
-[image6]: ./result/car_non_car_ycrcb_hog.png
+[image5]: ./result/visualize_hog_on_ycrcb_diff_orient.jpg
+[image6]: ./result/car_non_car_ycrcb_hog.jpg
 [image7]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
 
