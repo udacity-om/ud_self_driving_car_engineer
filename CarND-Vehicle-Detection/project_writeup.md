@@ -15,7 +15,11 @@ The goals / steps of this project are the following:
 [image4]: ./result/visualize_hog_on_diff_color_spaces.jpg
 [image5]: ./result/visualize_hog_on_ycrcb_diff_orient.jpg
 [image6]: ./result/car_non_car_ycrcb_hog.jpg
-[image7]: ./examples/output_bboxes.png
+[image7]: ./result/first_portion.jpg
+[image8]: ./result/second_portion.jpg
+[image9]: ./result/third_portion.jpg
+[image10]: ./result/fourth_portion.jpg
+[image11]: ./result/portions_combined.jpg
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -61,11 +65,29 @@ I used grid search to select the best SVM classifier. The parameters used are `{
 
 ###Sliding Window Search
 
-I used the function `find_cars()` provided by Udacity which uses number of cells to move instaed of overlap value. The `find_cars()` function finds cars in the portion of the image bounded in y by `ystart` and `ystop`. The cars appear bigger when closer to the camera and smaller when away from camera, so different scales are needed for different portions of the image. I created `get_detections()` function which calls find_cars() with different `(ystart, ystop, scale)` values. The image is divided into four parts and 'find_cars()' is called four times but with different scale values. 
+I used the function `find_cars()` provided by Udacity to do the sliding window search. The `find_cars()` function searches for a car using window which moves accross an image portion. The `find_cars()` function finds cars in the portion of the image bounded in y by `ystart` and `ystop`. The cars appear bigger when closer to the camera and smaller when away from camera, so different scales are needed for different portions of the image. I created `get_detections()` function which calls find_cars() with different `(ystart, ystop, scale)` values. The image is divided into four parts and `find_cars()` is called four times but with different scale values. 
 
-![alt text][image3]
+First portion:  `(ystart, ystop, scale)` = (400, 480, 1)
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+![alt text][image7]
+
+Second portion:  `(ystart, ystop, scale)` = (400, 540, 1.4)
+
+![alt text][image8]
+
+Third portion:  `(ystart, ystop, scale)` = (410, 620, 1.8)
+
+![alt text][image9]
+
+Fourt portion:  `(ystart, ystop, scale)` = (430, 680, 2)
+
+![alt text][image10]
+
+All portions combined:
+
+![alt text][image11]
+
+####2. Test images to demonstrate how the pipeline works.  What did you do to optimize the performance of your classifier?
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
