@@ -55,15 +55,13 @@ Here is an example using the `YCrCb` color space(Y channel) and HOG parameters o
 
 ![alt text][image6]
 
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+####3. Training a classifier using selected HOG and color features.
 
-I trained a linear SVM using...
+I used grid search to select the best SVM classifier. The parameters used are `{'kernel':('linear', 'poly', 'rbf', 'sigmoid'), 'C':[1, 5, 10, 15]}`. The grid search resulted in `{'C': 5, 'kernel': 'rbf'}` as the best parameters with mean score 0.99465. This best classifier gave a test score of 0.99634. I then saved the required parameters in `classifier_params.pkl` file.
 
 ###Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
-
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+I used the function `find_cars()` provided by Udacity which uses number of cells to move instaed of overlap value. The `find_cars()` function finds cars in the portion of the image bounded in y by `ystart` and `ystop`. The cars appear bigger when closer to the camera and smaller when away from camera, so different scales are needed for different portions of the image. I created `get_detections()` function which calls find_cars() with different `(ystart, ystop, scale)` values. The image is divided into four parts and 'find_cars()' is called four times but with different scale values. 
 
 ![alt text][image3]
 
