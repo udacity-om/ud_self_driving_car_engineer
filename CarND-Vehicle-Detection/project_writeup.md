@@ -9,12 +9,12 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
+[image1]: ./result/car_not_car.jpg
+[image2]: ./result/visualize_color_space.jpg
+[image3]: ./result/car_not_car_ycrcb.jpg
+[image4]: ./result/visualize_hog_on_diff_color_spaces.jpg
+[image5]: ./result/visualize_hog_on_ycrcb_diff_orient.png
+[image6]: ./result/car_not_car_ycrcb_hog.png
 [image7]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
 
@@ -31,16 +31,29 @@ I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an 
 
 ![alt text][image1]
 
-I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
-
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
-
+I then explored different color spaces and their channels. Below is the image showing the best channels of each color space:
 
 ![alt text][image2]
 
-####2. Explain how you settled on your final choice of HOG parameters.
+After going through the forum, I decided to use YCrCb color space. Below is the image showing the YCrCb color space(channel Y to visualize better) for car and non-car images:
 
-I tried various combinations of parameters and...
+![alt text][image3]
+
+I then explored `skimage.hog()` with parameters: `orientations=10`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` on different color spaces and below is the result:
+
+![alt text][image4]
+
+I also explored `skimage.hog()` on color space YCrCb(Y channel) with parameters `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` and different `orientations`:
+
+![alt text][image5]
+
+####2. Final choice of HOG parameters.
+
+I tried various combinations of color spaces and parameters as shown in the above section. `YCrCb` looks better and is also recommended in forums. `orientations=10` does a good job so I decided to use 10 instead of higher orientation as it would increase the features with no additional information.
+
+Here is an example using the `YCrCb` color space(Y channel) and HOG parameters of `orientations=10`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` for car and non-car image:
+
+![alt text][image6]
 
 ####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
