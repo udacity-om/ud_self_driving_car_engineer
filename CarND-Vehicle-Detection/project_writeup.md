@@ -25,6 +25,12 @@ The goals / steps of this project are the following:
 [image14]: ./output_images/test_image_portion_ycrcb.jpg
 [image15]: ./output_images/test_image_portion_ycrcb_hog.jpg
 [image16]: ./output_images/test_image_portion_sliding_window.jpg
+[image17]: ./output_images/detections_of_cars.jpg
+[image18]: ./output_images/heatmaps_of_cars.jpg
+[image19]: ./output_images/bounding_boxes_of_cars.jpg
+[image20]: ./output_images/heat_bbox_frames_0_3.jpg
+[image21]: ./output_images/heat_bbox_frames_4_7.jpg
+[image22]: ./output_images/heat_bbox_frames_8_9.jpg
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -126,29 +132,38 @@ Sliding Window Search:
 
 ####2. Implementing filter for false positives and method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video. From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+I created the function `get_bounding_box()` (cell 4, vehicle_detection.ipynb) which takes in all the boxes created by `get_detections()` function and creates a single bounding box for every car. The function `get_bounding_box()` adds heat to each box. To filter out false positives, a threshold is applied such that only multiple detections are considered as car (cell 4, vehicle_detection.ipynb). 
 
-![alt text][image13]
+####2. Pipeline
 
-Combining detections using heatmap. :
+I created a class `Vehicle_Detection`(cell 4, vehicle_detection.ipynb) which mainly holds the current frame count, current frame heatmap, heatmaps of last n frames, average heatmap. It also has a function `avg_heatmaps()` which averages the last n frames heatmap.
 
-![alt text][image14]
+The pipeline first increments the frame count. Then finds all the boxes(detections) using `get_detections()`. `get_bounding_box()` then creates current frame heatmap from the boxes. Then the heatmap is averaged over last n frames and then labeled using `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap. The idividual blobas are assumed to be a car. I constructed bounding boxes to cover the area of each blob using `draw_labeled_bboxes()`(cell 4, vehicle_detection.ipynb).  
+
+Detections of cars:
+
+![alt text][image17]
+
+Combining detections using heatmap:
+
+![alt text][image18]
 
 Bounding box for individual cars: 
 
-![alt text][image15]
+![alt text][image19]
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
-### Here are six frames and their corresponding heatmaps:
+### Here are ten frames with detections and and corresponding heatmaps:
+![alt text][image20]
+![alt text][image21]
+![alt text][image22]
 
-![alt text][image5]
+### Here is the output of `scipy.ndimage.measurements.label()` on the average heatmap from all ten frames:
+![alt text][image23]
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
-
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
+### Here the resulting bounding boxes on the labels:
+![alt text][image24]
 
 
 
