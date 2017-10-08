@@ -223,27 +223,3 @@ def draw_labeled_bboxes(img, labels):
         cv2.rectangle(img, bbox[0], bbox[1], (0,0,255), 6)
     # Return the image
     return img
-        
-def group_bbox(bbox_list):
-    gbbox = []
-    return gbbox
-
-def draw_labeled_bboxes_2(img, labels):
-    bbox_list = []
-    # Iterate through all detected cars
-    for car_number in range(1, labels[1]+1):
-        # Find pixels with each car_number label value
-        nonzero = (labels[0] == car_number).nonzero()
-        # Identify x and y values of those pixels
-        nonzeroy = np.array(nonzero[0])
-        nonzerox = np.array(nonzero[1])
-        # Define a bounding box based on min/max x and y
-        bbox_list.append((np.min(nonzerox), np.min(nonzeroy)), (np.max(nonzerox), np.max(nonzeroy)))
-    
-    gbbox = group_bbox(bbox_list)
-       
-    for bbox in gbbox:
-        # Draw the box on the image
-        cv2.rectangle(img, bbox[0], bbox[1], (0,0,255), 6)
-    # Return the image
-    return img
