@@ -15,7 +15,7 @@ The goals / steps of this project are the following:
 [image4]: ./output_images/visualize_hog_on_diff_color_spaces.jpg
 [image5]: ./output_images/visualize_hog_on_ycrcb_diff_orient.jpg
 [image6]: ./output_images/car_non_car_ycrcb_hog.jpg
-[image7]: ./output_images/sliding_window.jpg
+[image7]: ./output_images/sliding_fixed_window.jpg
 [image8]: ./output_images/first_portion.jpg
 [image9]: ./output_images/second_portion.jpg
 [image10]: ./output_images/third_portion.jpg
