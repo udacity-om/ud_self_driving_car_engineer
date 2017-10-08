@@ -136,13 +136,13 @@ Sliding Window Search:
 
 ####2. Implementing filter for false positives and method for combining overlapping bounding boxes.
 
-I created the function `get_bounding_box()` (cell 4, vehicle_detection.ipynb) which takes in all the boxes created by `get_detections()` function and creates a single bounding box for every car. The function `get_bounding_box()` adds heat to each box. To filter out false positives, a threshold is applied such that only multiple detections are considered as car (cell 4, vehicle_detection.ipynb). 
+I created the function `get_bounding_box()` (cell 6, vehicle_detection.ipynb) which takes in all the boxes created by `get_detections()` function and creates a single bounding box for every car. The function `get_bounding_box()` adds heat to each box. To filter out false positives, a threshold is applied such that only multiple detections are considered as car (line 8, cell 6, vehicle_detection.ipynb). 
 
 ####2. Pipeline
 
-I created a class `Vehicle_Detection`(cell 4, vehicle_detection.ipynb) which mainly holds the current frame count, current frame heatmap, heatmaps of last n frames, average heatmap. It also has a function `avg_heatmaps()` which averages the last n frames heatmap.
+I created a class `Vehicle_Detection`(cell 11, vehicle_detection.ipynb) which mainly holds the current frame count, current frame heatmap, heatmaps of last n frames, average heatmap. It also has a function `avg_heatmaps()` which averages the last n frames heatmap.
 
-The pipeline first increments the frame count. Then finds all the boxes(detections) using `get_detections()`. `get_bounding_box()` then creates current frame heatmap from the boxes. Then the heatmap is averaged over last n frames and then labeled using `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap. The idividual blobas are assumed to be a car. I constructed bounding boxes to cover the area of each blob using `draw_labeled_bboxes()`(cell 4, vehicle_detection.ipynb).  
+The pipeline(cell 12, vehicle_detection.ipynb) first increments the frame count. Then finds all the boxes(detections) using `get_detections()`. `get_bounding_box()` then creates current frame heatmap from the boxes. Then the heatmap is averaged over last n frames and then labeled using `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap. The idividual blobas are assumed to be a car. I constructed bounding boxes to cover the area of each blob using `draw_labeled_bboxes()`.  
 
 Detections of cars:
 
@@ -177,5 +177,11 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ####1. Problems / issues faced in the implementation of this project.  Where the pipeline will likely fail?  What can be done to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+* Problems/Issues:
+  * Initially i had started by extracting HOG features on ALL `YCrCb` color space with parameters `orientations=10`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`. This resulted in a lot of features which led to more training time and video processing time. I then decided to work only on Y channel of `YCrCb` color space with `orientations=8`, `pixels_per_cell=(16, 16)` and `cells_per_block=(2, 2)`. This decreased the training and video processing time drastically with good performance.
+  * The other issue faced was on the Sliding Window implementation. I had to experiment a lot to get the correct scales for different portions of the image.
+  
+* Improvements:
+  * The pipeline is likely to fail when there are cars on the left of the host vehicle. To reduce computational time, I implemented the Sliding Window search only on the right side of the host vehicle. This has to be exted to the left too to detect vehicles on left.
+  * The pipeline fails to differentiate between two vehicle when they are close to each other. This can be solved by having history for each detected vehicle
 
