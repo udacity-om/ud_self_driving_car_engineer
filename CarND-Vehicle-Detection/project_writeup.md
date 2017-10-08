@@ -9,17 +9,20 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./result/car_non_car.jpg
-[image2]: ./result/visualize_color_space.jpg
-[image3]: ./result/car_non_car_ycrcb.jpg
-[image4]: ./result/visualize_hog_on_diff_color_spaces.jpg
-[image5]: ./result/visualize_hog_on_ycrcb_diff_orient.jpg
-[image6]: ./result/car_non_car_ycrcb_hog.jpg
-[image7]: ./result/first_portion.jpg
-[image8]: ./result/second_portion.jpg
-[image9]: ./result/third_portion.jpg
-[image10]: ./result/fourth_portion.jpg
-[image11]: ./result/portions_combined.jpg
+[image1]: ./output_images/car_non_car.jpg
+[image2]: ./output_images/visualize_color_space.jpg
+[image3]: ./output_images/car_non_car_ycrcb.jpg
+[image4]: ./output_images/visualize_hog_on_diff_color_spaces.jpg
+[image5]: ./output_images/visualize_hog_on_ycrcb_diff_orient.jpg
+[image6]: ./output_images/car_non_car_ycrcb_hog.jpg
+[image7]: ./output_images/first_portion.jpg
+[image8]: ./output_images/second_portion.jpg
+[image9]: ./output_images/third_portion.jpg
+[image10]: ./output_images/fourth_portion.jpg
+[image11]: ./output_images/portions_combined.jpg
+[image12]: ./output_images/detections.jpg
+[image13]: ./output_images/heatmap.jpg
+[image14]: ./output_images/bounding_box.jpg
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -89,18 +92,26 @@ All portions combined:
 
 ####2. Test images to demonstrate how the pipeline works.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Ultimately I searched on four scales using YCrCb 3-channel HOG features plus spatially binned color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text][image4]
+Detections(finding cars in an image):
+
+![alt text][image12]
+
+Heatmap of detections:
+
+![alt text][image13]
+
+Bounding box for individual cars: 
+
+![alt text][image14]
 ---
 
 ### Video Implementation
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+####1. Here's a [link to my video result](./project_video_output.mp4)
 
-
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+####2. Implementing filter for false positives and method for combining overlapping bounding boxes.
 
 I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
 
