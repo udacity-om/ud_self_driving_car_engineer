@@ -28,9 +28,13 @@ The goals / steps of this project are the following:
 [image17]: ./output_images/detections_of_cars.jpg
 [image18]: ./output_images/heatmaps_of_cars.jpg
 [image19]: ./output_images/bounding_boxes_of_cars.jpg
-[image20]: ./output_images/heat_bbox_frames_0_3.jpg
-[image21]: ./output_images/heat_bbox_frames_4_7.jpg
-[image22]: ./output_images/heat_bbox_frames_8_9.jpg
+[image20]: ./output_images/detections_heat_frame_0_1.jpg
+[image21]: ./output_images/detections_heat_frame_2_3.jpg
+[image22]: ./output_images/detections_heat_frame_4_5.jpg
+[image23]: ./output_images/detections_heat_frame_6_7.jpg
+[image24]: ./output_images/detections_heat_frame_8_9.jpg
+[image25]: ./output_images/label_n_frames.jpg
+[image26]: ./output_images/bbox_n_frames.jpg
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -154,24 +158,24 @@ Bounding box for individual cars:
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
-### Here are ten frames with detections and and corresponding heatmaps:
+### Here are ten frames with detections and corresponding heatmaps:
 ![alt text][image20]
 ![alt text][image21]
 ![alt text][image22]
-
-### Here is the output of `scipy.ndimage.measurements.label()` on the average heatmap from all ten frames:
 ![alt text][image23]
-
-### Here the resulting bounding boxes on the labels:
 ![alt text][image24]
 
+### Here is the output of `scipy.ndimage.measurements.label()` on the average heatmap from all ten frames:
+![alt text][image25]
 
+### Here the resulting bounding boxes on the labels:
+![alt text][image26]
 
 ---
 
 ###Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+####1. Problems / issues faced in the implementation of this project.  Where the pipeline will likely fail?  What can be done to make it more robust?
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
