@@ -15,14 +15,15 @@ The goals / steps of this project are the following:
 [image4]: ./output_images/visualize_hog_on_diff_color_spaces.jpg
 [image5]: ./output_images/visualize_hog_on_ycrcb_diff_orient.jpg
 [image6]: ./output_images/car_non_car_ycrcb_hog.jpg
-[image7]: ./output_images/first_portion.jpg
-[image8]: ./output_images/second_portion.jpg
-[image9]: ./output_images/third_portion.jpg
-[image10]: ./output_images/fourth_portion.jpg
-[image11]: ./output_images/portions_combined.jpg
-[image12]: ./output_images/detections.jpg
-[image13]: ./output_images/heatmap.jpg
-[image14]: ./output_images/bounding_box.jpg
+[image7]: ./output_images/sliding_window.jpg
+[image8]: ./output_images/first_portion.jpg
+[image9]: ./output_images/second_portion.jpg
+[image10]: ./output_images/third_portion.jpg
+[image11]: ./output_images/fourth_portion.jpg
+[image12]: ./output_images/portions_combined.jpg
+[image13]: ./output_images/detections.jpg
+[image14]: ./output_images/heatmap.jpg
+[image15]: ./output_images/bounding_box.jpg
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -70,43 +71,51 @@ I used grid search to select the best SVM classifier. The parameters used are `{
 
 ###Sliding Window Search
 
-I used the function `find_cars()` provided by Udacity to do the sliding window search. The `find_cars()` function searches for a car using window which moves accross an image portion. The `find_cars()` function finds cars in the portion of the image bounded in y by `ystart` and `ystop`. The cars appear bigger when closer to the camera and smaller when away from camera, so different scales are needed for different portions of the image. I created `get_detections()` function which calls find_cars() with different `(ystart, ystop, scale)` values. The image is divided into four parts and `find_cars()` is called four times but with different scale values. 
-
-First portion:  `(ystart, ystop, scale)` = (400, 480, 1)
+I used the function `find_cars()`(cell 3, vehicle_detection.ipynb) provided by Udacity to do the sliding window search. The `find_cars()` function searches for a car using window which moves accross an image portion. The `find_cars()` function finds cars in the portion of the image bounded in y by `ystart` and `ystop`. Below is an example of sliding window seacrh on lower half of the image with fixed window size:
 
 ![alt text][image7]
 
-Second portion:  `(ystart, ystop, scale)` = (400, 540, 1.4)
+####2. Optimize performance of the classifier. Test images to demonstrate how the pipeline works.
+
+The classifier's job was to search for car in every window of the image using the sliding window search. The classifier was trained on a fixed image size of 64x64 but the car can appear anywhere in the image. The cars appear bigger when closer to the camera and smaller when away from camera. So to help the classifier, different scales were used in different portions of the image. I created `get_detections()`(cell 4, vehicle_detection.ipynb) function which calls find_cars() with different `(ystart, ystop, scale)` values.
+
+First portion:  `(ystart, ystop, scale)` = (400, 480, 1)
 
 ![alt text][image8]
 
-Third portion:  `(ystart, ystop, scale)` = (410, 620, 1.8)
+Second portion:  `(ystart, ystop, scale)` = (400, 540, 1.4)
 
 ![alt text][image9]
 
-Fourt portion:  `(ystart, ystop, scale)` = (430, 680, 2)
+Third portion:  `(ystart, ystop, scale)` = (410, 620, 1.8)
 
 ![alt text][image10]
 
-All portions combined:
+Fourt portion:  `(ystart, ystop, scale)` = (430, 680, 2)
 
 ![alt text][image11]
 
-####2. Test images to demonstrate how the pipeline works.  What did you do to optimize the performance of your classifier?
-
-Ultimately I searched on four scales using YCrCb 3-channel HOG features plus spatially binned color in the feature vector, which provided a nice result.  Here are some example images:
-
-Detections(finding cars in an image):
+All portions combined:
 
 ![alt text][image12]
 
-Heatmap of detections:
+Ultimately I searched on the four scales using YCrCb 3-channel HOG features plus spatially binned color in the feature vector, which provided a nice result. Here are some example images:
+
+Selecting only a portion of the image:
 
 ![alt text][image13]
 
-Bounding box for individual cars: 
+Converting the portion to `YCrCb` color space:
 
 ![alt text][image14]
+
+Extracting HOG features of the portion:
+
+![alt text][image15]
+
+Sliding Window Search:
+
+![alt text][image16]
 ---
 
 ### Video Implementation
@@ -116,6 +125,16 @@ Bounding box for individual cars:
 ####2. Implementing filter for false positives and method for combining overlapping bounding boxes.
 
 I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+
+![alt text][image13]
+
+Combining detections using heatmap. :
+
+![alt text][image14]
+
+Bounding box for individual cars: 
+
+![alt text][image15]
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
