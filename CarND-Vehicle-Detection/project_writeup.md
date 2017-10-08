@@ -21,9 +21,10 @@ The goals / steps of this project are the following:
 [image10]: ./output_images/third_portion.jpg
 [image11]: ./output_images/fourth_portion.jpg
 [image12]: ./output_images/portions_combined.jpg
-[image13]: ./output_images/detections.jpg
-[image14]: ./output_images/heatmap.jpg
-[image15]: ./output_images/bounding_box.jpg
+[image13]: ./output_images/test_image_portion.jpg
+[image14]: ./output_images/test_image_portion_ycrcb.jpg
+[image15]: ./output_images/test_image_portion_ycrcb_hog.jpg
+[image16]: ./output_images/test_image_portion_sliding_window.jpg
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -116,6 +117,7 @@ Extracting HOG features of the portion:
 Sliding Window Search:
 
 ![alt text][image16]
+
 ---
 
 ### Video Implementation
