@@ -32,39 +32,41 @@ The goals / steps of this project are the following:
 
 ####1. Extracting HOG features from the training images.
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+The code for this step is contained in the file classifier.ipynb
 
-I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+I started by reading in all the `vehicle` and `non-vehicle` images(cell 3, classifier.ipynb).  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![alt text][image1]
 
-I then explored different color spaces and their channels. Below is the image showing the best channels of each color space:
+I then explored different color spaces and their channels(cell 22, classifier.ipynb). Below is the image showing the best channels of each color space:
 
 ![alt text][image2]
 
-After going through the forum, I decided to use YCrCb color space. Below is the image showing the YCrCb color space(channel Y to visualize better) for car and non-car images:
+After going through the forum, I decided to use YCrCb color space(cell 23, classifier.ipynb). Below is the image showing the YCrCb color space(channel Y to visualize better) for car and non-car images:
 
 ![alt text][image3]
 
-I then explored `skimage.hog()` with parameters: `orientations=10`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` on different color spaces and below is the result:
+I then explored `skimage.hog()`(using the helper function `get_hog_features()`) with parameters: `orientations=10`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` on different color spaces and below is the result(cell 15, classifier.ipynb):
 
 ![alt text][image4]
 
-I also explored `skimage.hog()` on color space YCrCb(Y channel) with parameters `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` and different `orientations`:
+I also explored `skimage.hog()` on color space YCrCb(Y channel) with parameters `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` but with different `orientations`(cell 17, classifier.ipynb):
 
 ![alt text][image5]
 
 ####2. Final choice of HOG parameters.
 
-I tried various combinations of color spaces and parameters as shown in the above section. `YCrCb` looks better and is also recommended in forums. `orientations=10` does a good job so I decided to use 10 instead of higher orientation as it would increase the features with no additional information.
+I tried various combinations of color spaces and parameters as shown in the above section. `YCrCb` looked better and is also recommended in forums. `orientations=10` does a good job so I decided to use 10 instead of higher orientation as it would increase the features with no additional information.
 
-Here is an example using the `YCrCb` color space(Y channel) and HOG parameters of `orientations=10`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` for car and non-car image:
+Here is an example using the `YCrCb` color space(Y channel) and HOG parameters of `orientations=10`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)` for car and non-car image(cell 20, classifier.ipynb):
 
 ![alt text][image6]
 
 ####3. Training a classifier using selected HOG and color features.
 
-I used grid search to select the best SVM classifier. The parameters used are `{'kernel':('linear', 'poly', 'rbf', 'sigmoid'), 'C':[1, 5, 10, 15]}`. The grid search resulted in `{'C': 5, 'kernel': 'rbf'}` as the best parameters with mean score 0.99465. This best classifier gave a test score of 0.99634. I then saved the required parameters in `classifier_params.pkl` file.
+The extracted features were normalized using `StandardScaler()` from `sklearn` package and then split into training and testing datasets(cell 4, classifier.ipynb). 
+
+I used grid search to select the best SVM classifier. The parameters used are `{'kernel':('linear', 'poly', 'rbf', 'sigmoid'), 'C':[1, 5, 10, 15]}`. The grid search resulted in `{'C': 5, 'kernel': 'rbf'}` as the best parameters with mean score 0.99465. This best classifier gave a test score of 0.99634. I then saved the required parameters in `classifier_params.pkl` file(cell 8,9,10 and 24, classifier.ipynb).
 
 ###Sliding Window Search
 
